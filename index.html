@@ -1,0 +1,2025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>GEM Observation Plot Guide 2026</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    :root {
+      --green: #205b36;
+      --green-dark: #17472a;
+      --green-light: #eaf2ec;
+      --paper: #ffffff;
+      --bg: #f4f6f1;
+      --text: #202421;
+      --muted: #687068;
+      --border: #d9e0d8;
+      --gold: #b48b21;
+    }
+
+    html { background: var(--bg); }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-text-size-adjust: 100%;
+    }
+
+    button, textarea, input { font: inherit; }
+
+    .app {
+      max-width: 760px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: var(--paper);
+      box-shadow: 0 0 20px rgba(0,0,0,.04);
+    }
+
+    header {
+      background: var(--green);
+      color: white;
+      padding:
+        calc(18px + env(safe-area-inset-top))
+        20px
+        18px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    header p {
+      margin: 5px 0 0;
+      opacity: .9;
+      font-size: 14px;
+    }
+
+    main { padding: 20px; }
+    h2 { color: var(--green); margin-top: 0; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    .welcome-box h2 {
+      font-size: 29px;
+      line-height: 1.2;
+    }
+
+    .welcome-box p {
+      font-size: 17px;
+      line-height: 1.55;
+    }
+
+    .status {
+      background: var(--green-light);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 13px 14px;
+      color: var(--green-dark);
+      margin-bottom: 16px;
+      line-height: 1.45;
+      font-size: 14px;
+    }
+
+    .button {
+      display: block;
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      padding: 15px 18px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+
+    .primary { background: var(--green); color: white; }
+    .secondary { background: #e8ece7; color: var(--green); }
+    .outline {
+      background: white;
+      color: var(--green);
+      border: 1px solid #b9c4b8;
+    }
+
+    .top-links {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .top-links button {
+      flex: 1;
+      background: white;
+      border: 1px solid #cad1c8;
+      border-radius: 9px;
+      padding: 10px 8px;
+      font-weight: 700;
+      color: var(--green);
+      cursor: pointer;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px 0 24px;
+    }
+
+    .section-card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      background: #f8faf7;
+      display: flex;
+      flex-direction: column;
+      min-height: 175px;
+    }
+
+    .section-card h3 {
+      color: var(--green);
+      margin: 0 0 8px;
+      font-size: 19px;
+      line-height: 1.25;
+    }
+
+    .section-meta {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+
+    .section-card button {
+      margin-top: auto;
+      border: 0;
+      border-radius: 9px;
+      padding: 11px;
+      background: var(--green);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .search-box {
+      margin: 18px 0;
+      padding: 16px;
+      background: #f7f9f6;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      color: #667267;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .search-row { display: flex; gap: 8px; }
+
+    .search-row input {
+      flex: 1;
+      min-width: 0;
+      padding: 12px;
+      border: 1px solid #b9c4b8;
+      border-radius: 9px;
+    }
+
+    .search-row button {
+      border: none;
+      border-radius: 9px;
+      padding: 10px 14px;
+      background: var(--green);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .search-results { margin-top: 8px; }
+
+    .search-result {
+      width: 100%;
+      text-align: left;
+      background: white;
+      color: var(--green);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+      margin-top: 6px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .plot-badge, .section-chip {
+      display: inline-block;
+      background: var(--green-light);
+      color: var(--green-dark);
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .section-chip {
+      background: #f0f1ed;
+      border: 1px solid var(--border);
+      margin-left: 6px;
+    }
+
+    .line-name {
+      font-size: 31px;
+      line-height: 1.12;
+      margin: 4px 0 8px;
+      color: var(--green);
+      overflow-wrap: anywhere;
+    }
+
+    .coords {
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 18px;
+    }
+
+    .prototype-note {
+      background: #fff8df;
+      border: 1px solid #ead9a6;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 13px;
+      line-height: 1.4;
+      margin-bottom: 16px;
+      color: #635520;
+    }
+
+    .info-card {
+      background: #f8f9f6;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+
+    .info-row { margin-bottom: 15px; }
+    .info-row:last-child { margin-bottom: 0; }
+
+    .value {
+      font-size: 16px;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+
+    .agronomic-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .metric {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 10px;
+    }
+
+    .metric-label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .metric-value {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .favorite-button,
+    .question-button {
+      width: 100%;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .favorite-button {
+      background: white;
+      border: 2px solid #d5d9d3;
+    }
+
+    .favorite-button.selected {
+      border-color: var(--gold);
+      background: #fff8df;
+    }
+
+    .question-button {
+      background: white;
+      border: 1px solid #b9c4b8;
+      color: var(--green);
+      margin-bottom: 20px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 130px;
+      padding: 14px;
+      font-size: 16px;
+      border: 1px solid #bbb;
+      border-radius: 10px;
+      resize: vertical;
+    }
+
+    .saved-message {
+      font-size: 13px;
+      color: #667267;
+      margin-top: 5px;
+      min-height: 18px;
+    }
+
+    .navigation {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .navigation button {
+      flex: 1;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 8px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .nav-prev { background: #e8ece7; color: var(--green); }
+    .nav-next { background: var(--green); color: white; }
+
+    .filter-row {
+      display: flex;
+      gap: 8px;
+      margin: 0 0 16px;
+    }
+
+    .filter-row button {
+      flex: 1;
+      padding: 10px;
+      border-radius: 9px;
+      border: 1px solid #b9c4b8;
+      background: white;
+      color: var(--green);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .filter-row button.active {
+      background: var(--green);
+      color: white;
+    }
+
+    .export-box {
+      background: var(--green-light);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 18px 0 24px;
+    }
+
+    .export-box p {
+      margin-top: 0;
+      line-height: 1.45;
+      color: #4b574d;
+      font-size: 14px;
+    }
+
+    .notes-entry {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 12px;
+      background: #fafbf9;
+    }
+
+    .notes-entry h3 {
+      margin: 0 0 5px;
+      color: var(--green);
+      overflow-wrap: anywhere;
+    }
+
+    .notes-entry .small {
+      color: #666;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .notes-entry .note-text {
+      line-height: 1.4;
+      white-space: pre-wrap;
+    }
+
+    .empty-notes {
+      padding: 30px 10px;
+      text-align: center;
+      color: #666;
+      line-height: 1.5;
+    }
+
+
+
+    /* CUMULATIVE FIELD MAP */
+    .full-map-preview {
+      margin: 14px 16px 8px;
+      border: 1px solid #cfd8ce;
+      border-radius: 10px;
+      overflow: hidden;
+      background: white;
+    }
+
+    .full-map-preview-row {
+      display: grid;
+      grid-template-columns: 58px 1fr;
+      min-height: 24px;
+      border-bottom: 1px solid #e7ebe5;
+    }
+
+    .full-map-preview-row:last-child { border-bottom: 0; }
+
+    .full-map-preview-range {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--muted);
+      background: #f6f7f4;
+      border-right: 1px solid #e7ebe5;
+    }
+
+    .full-map-preview-band {
+      display: flex;
+      align-items: center;
+      padding: 3px 8px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #31513a;
+      min-height: 24px;
+    }
+
+    .section-release { background: #edf5e8; }
+    .section-cl { background: #e3efe5; }
+    .section-hi { background: #dbe9de; }
+    .section-nc { background: #d1e1d5; }
+    .section-gap { background: #f6f7f4; color: #9a9f99; }
+
+    .overview-map .overview-map-button {
+      margin: 8px 16px 16px;
+      width: calc(100% - 32px);
+    }
+
+    .full-field-map-wrap {
+      overflow-x: auto;
+      padding-bottom: 8px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .full-field-map {
+      min-width: 720px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      background: white;
+    }
+
+    .full-field-header,
+    .full-field-row {
+      display: grid;
+      grid-template-columns: 66px repeat(16, minmax(38px, 1fr));
+      min-width: 720px;
+    }
+
+    .full-field-header {
+      background: #f5f7f4;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+
+    .full-field-header div {
+      text-align: center;
+      padding: 7px 2px;
+      font-size: 10px;
+      color: var(--muted);
+      border-right: 1px solid #e7ebe5;
+    }
+
+    .full-field-range {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px 2px;
+      font-size: 10px;
+      font-weight: 700;
+      background: #f6f7f4;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid #e7ebe5;
+      position: sticky;
+      left: 0;
+      z-index: 3;
+    }
+
+    .full-field-cell {
+      min-height: 30px;
+      border-right: 1px solid #e7ebe5;
+      border-bottom: 1px solid #e7ebe5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      font-size: 8px;
+      color: #33523b;
+      cursor: pointer;
+    }
+
+    .full-field-cell.empty {
+      background: #fafbf9;
+      cursor: default;
+    }
+
+    .full-field-cell.current {
+      background: var(--green) !important;
+      color: white;
+      outline: 3px solid #f0c94d;
+      outline-offset: -3px;
+      font-weight: 700;
+      z-index: 2;
+    }
+
+    .full-field-cell.favorite::after {
+      content: "★";
+      position: absolute;
+      top: 0;
+      right: 1px;
+      color: var(--gold);
+      font-size: 7px;
+    }
+
+    .full-field-cell.noted::before {
+      content: "•";
+      position: absolute;
+      bottom: -3px;
+      left: 2px;
+      color: #4b6f91;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .section-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 12px 0 4px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .section-legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .section-legend i {
+      width: 13px;
+      height: 13px;
+      border-radius: 3px;
+      border: 1px solid #c9d0c8;
+      display: inline-block;
+    }
+
+    /* FIELD OVERVIEW + SECTION MAPS */
+    .overview-map {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      margin: 14px 0 24px;
+      background: #f8faf7;
+    }
+
+    .overview-title {
+      padding: 14px 16px 8px;
+      font-weight: 700;
+      color: var(--green);
+      font-size: 18px;
+    }
+
+    .overview-note {
+      padding: 0 16px 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .overview-stack {
+      display: flex;
+      flex-direction: column-reverse;
+      margin: 0 16px 16px;
+      border: 1px solid #cfd8ce;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .overview-section {
+      border: 0;
+      border-top: 1px solid rgba(0,0,0,.08);
+      padding: 12px 14px;
+      text-align: left;
+      cursor: pointer;
+      color: var(--green-dark);
+      background: #edf5e8;
+    }
+
+    .overview-section:nth-child(2) { background: #e7f1e9; }
+    .overview-section:nth-child(3) { background: #dfeadf; }
+    .overview-section:nth-child(4) { background: #d7e5da; }
+
+    .overview-section strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 3px;
+    }
+
+    .overview-section span {
+      display: block;
+      font-size: 12px;
+      color: #59675b;
+    }
+
+    .section-actions {
+      margin-top: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .section-card .map-action {
+      background: #e8ece7;
+      color: var(--green);
+      border: 1px solid #cbd4ca;
+    }
+
+    .section-map-wrap {
+      overflow-x: auto;
+      padding-bottom: 8px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .section-map {
+      min-width: 650px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      background: white;
+    }
+
+    .section-map-header,
+    .section-map-row {
+      display: grid;
+      grid-template-columns: 62px repeat(16, minmax(32px, 1fr));
+      min-width: 650px;
+    }
+
+    .section-map-header {
+      background: #f5f7f4;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-map-header div {
+      text-align: center;
+      padding: 7px 2px;
+      font-size: 10px;
+      color: var(--muted);
+      border-right: 1px solid #e7ebe5;
+    }
+
+    .section-map-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 3px;
+      font-size: 11px;
+      font-weight: 700;
+      background: #f6f7f4;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid #e7ebe5;
+      position: sticky;
+      left: 0;
+      z-index: 3;
+    }
+
+    .section-map-cell {
+      min-height: 34px;
+      border-right: 1px solid #e7ebe5;
+      border-bottom: 1px solid #e7ebe5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: #edf5e8;
+      color: #33523b;
+      font-size: 9px;
+      cursor: pointer;
+    }
+
+    .section-map-cell.empty {
+      background: #f8f9f7;
+      cursor: default;
+    }
+
+    .section-map-cell.current {
+      background: var(--green);
+      color: white;
+      outline: 3px solid #f0c94d;
+      outline-offset: -3px;
+      font-weight: 700;
+      z-index: 2;
+    }
+
+    .section-map-cell.favorite::after {
+      content: "★";
+      position: absolute;
+      top: 0;
+      right: 1px;
+      color: var(--gold);
+      font-size: 8px;
+    }
+
+    .section-map-cell.noted::before {
+      content: "•";
+      position: absolute;
+      bottom: -3px;
+      left: 2px;
+      color: #4b6f91;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .map-instructions {
+      color: var(--muted);
+      line-height: 1.45;
+      margin-bottom: 14px;
+    }
+
+    .map-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .resource-box {
+      margin-top: 26px;
+      padding: 18px;
+      background: #f7f9f6;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+
+    .resource-box h3 {
+      color: var(--green);
+      margin: 0 0 8px;
+      font-size: 19px;
+    }
+
+    .resource-box a {
+      display: block;
+      padding: 10px 0;
+      color: var(--green);
+      font-weight: 700;
+      text-decoration: none;
+      border-top: 1px solid #e1e6df;
+    }
+
+    footer {
+      text-align: center;
+      padding: 24px 15px calc(24px + env(safe-area-inset-bottom));
+      color: #777;
+      font-size: 12px;
+    }
+
+    .disclaimer {
+      max-width: 720px;
+      margin: 8px auto 0;
+      line-height: 1.5;
+      font-size: 11px;
+    }
+
+    .disclaimer a { color: var(--green); }
+
+    .error-box {
+      background: #fff4f4;
+      border: 1px solid #e4b7b7;
+      border-radius: 12px;
+      padding: 14px;
+      color: #7e2b2b;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 560px) {
+      main { padding: 17px; }
+      .section-grid { grid-template-columns: 1fr; }
+      .line-name { font-size: 28px; }
+      .welcome-box h2 { font-size: 27px; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="app">
+  <header>
+    <h1>GEM Observation Plot Guide 2026</h1>
+    <p>Interactive Observation Tour Prototype</p>
+  </header>
+
+  <main>
+
+    <!-- HOME -->
+    <section id="homeScreen" class="screen active">
+      <div class="welcome-box">
+        <h2>Welcome! We’re glad you’re here.</h2>
+
+        <p>
+          Explore GEM release observations and breeding cross observation material
+          from Chile, Hawaii, and North Carolina. Use this guide to locate plots,
+          review available information, save favorites, and record your own notes.
+        </p>
+
+        <p>
+          Your notes are saved automatically on this device as you go.
+          Before you leave, you can download or email yourself a copy from
+          <b>My Field Notes</b>.
+        </p>
+
+        <div class="status">
+          <b>Field layout:</b> Each entry is a single-row plot. Range and Pass identify
+          the location of each plot.
+          <br><br>
+          <b>Prototype navigation:</b> Section starting points are provisional.
+          Walking direction and final tour order will be confirmed before the tour.
+        </div>
+
+        <div id="dataStatus" class="status">Loading observation plots…</div>
+
+        <div class="overview-map">
+          <div class="overview-title">Field Overview</div>
+          <div class="overview-note">
+            Cumulative view of all observation sections in Tier 1, arranged by Range.
+            Use it to see where each section sits relative to the others.
+          </div>
+          <div id="fullMapPreview" class="full-map-preview"></div>
+          <button class="button secondary overview-map-button" onclick="showFullFieldMap()">
+            View Full Field Map
+          </button>
+          <div class="overview-note" style="padding-top:0;">
+            Tap a section below to open its detailed plot map.
+          </div>
+          <div id="fieldOverview" class="overview-stack"></div>
+        </div>
+
+        <h2 style="font-size:22px; margin-top:28px;">Explore Observation Sections</h2>
+        <div id="sectionCards" class="section-grid"></div>
+
+        <div class="search-box">
+          <div class="label">Find a Plot</div>
+          <p style="margin:5px 0 10px; font-size:14px; color:#687068;">
+            Search by line/pedigree or by Range and Pass.
+          </p>
+          <div class="search-row">
+            <input id="plotSearchHome" type="search"
+              placeholder="e.g., GEMN-0178 or 13 3"
+              oninput="searchPlots('plotSearchHome','searchResultsHome')"
+              onkeydown="if(event.key==='Enter') searchPlots('plotSearchHome','searchResultsHome',true)">
+            <button onclick="searchPlots('plotSearchHome','searchResultsHome',true)">Find</button>
+          </div>
+          <div id="searchResultsHome" class="search-results"></div>
+        </div>
+
+        <button class="button secondary" onclick="showNotes()">View My Field Notes</button>
+
+        <button class="button outline" onclick="generalQuestion()">
+          ✉ General Questions / Contact Us
+        </button>
+
+        <div class="resource-box">
+          <h3>Official GEM Resources</h3>
+          <a href="https://www.ars.usda.gov/germplasm-enhancement-of-maize/" target="_blank" rel="noopener">About the GEM Project ↗</a>
+          <a href="https://www.ars.usda.gov/germplasm-enhancement-of-maize/germplasm-development/" target="_blank" rel="noopener">GEM Germplasm & Released Lines ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLOT -->
+    <section id="plotScreen" class="screen">
+      <div class="top-links">
+        <button onclick="showHome()">Home</button>
+        <button onclick="showSections()">Sections</button>
+        <button onclick="showNotes()">My Notes</button>
+      </div>
+
+      <div class="search-row" style="margin-bottom:14px;">
+        <input id="plotSearchTour" type="search" placeholder="Jump to line or Range Pass…"
+          onkeydown="if(event.key==='Enter') searchPlots('plotSearchTour','searchResultsTour',true)">
+        <button onclick="searchPlots('plotSearchTour','searchResultsTour',true)">Find</button>
+      </div>
+      <div id="searchResultsTour" class="search-results" style="margin-bottom:14px;"></div>
+
+      <div>
+        <span id="plotBadge" class="plot-badge"></span>
+        <span id="sectionChip" class="section-chip"></span>
+      </div>
+
+      <h2 id="lineName" class="line-name"></h2>
+      <div id="coords" class="coords"></div>
+
+      <button class="button secondary" style="margin:0 0 16px;" onclick="showCurrentSectionMap()">
+        View This Section Map
+      </button>
+
+      <div class="prototype-note">
+        Prototype plot order is sorted by Range and Pass within each section.
+        Final walking direction will be updated after the tour route is confirmed.
+      </div>
+
+      <div id="infoCard" class="info-card"></div>
+
+      <button id="favoriteButton" class="favorite-button" onclick="toggleFavorite()">
+        ☆ Save as Favorite
+      </button>
+
+      <button class="question-button" onclick="askQuestion()">
+        ✉ Ask a Question About This Plot
+      </button>
+
+      <div class="label">My Notes</div>
+      <textarea id="noteBox"
+        placeholder="Record your observations about this plot..."
+        oninput="saveCurrentNote()"></textarea>
+      <div id="savedMessage" class="saved-message"></div>
+
+      <div class="navigation">
+        <button class="nav-prev" onclick="previousPlot()">← Previous Plot</button>
+        <button class="nav-next" onclick="nextPlot()">Next Plot →</button>
+      </div>
+    </section>
+
+    <!-- END OF SECTION -->
+    <section id="sectionFinishScreen" class="screen">
+      <div class="top-links">
+        <button onclick="showHome()">Home</button>
+        <button onclick="showSections()">Sections</button>
+        <button onclick="showNotes()">My Notes</button>
+      </div>
+
+      <div class="welcome-box" style="padding-top:18px;">
+        <h2 id="sectionFinishTitle">You've reached the end of this section.</h2>
+
+        <p id="sectionFinishText"></p>
+
+        <div class="status">
+          <b>Prototype note:</b> The current plot order is based on Range and Pass.
+          Final walking direction and section transitions will be updated after the tour route is confirmed.
+        </div>
+
+        <button id="sectionFinishMapButton" class="button secondary">
+          View This Section Map
+        </button>
+
+        <button id="nextSectionButton" class="button primary">
+          Continue to Next Section
+        </button>
+
+        <button class="button outline" onclick="showSections()">
+          Choose a Different Section
+        </button>
+
+        <button class="button outline" onclick="returnToLastPlotInSection()">
+          ← Return to Final Plot
+        </button>
+      </div>
+    </section>
+
+    <!-- SECTIONS -->
+    <section id="sectionsScreen" class="screen">
+      <div class="top-links">
+        <button onclick="showHome()">Home</button>
+        <button onclick="returnToPlot()">Return to Plot</button>
+        <button onclick="showNotes()">My Notes</button>
+      </div>
+
+      <h2>Observation Sections</h2>
+      <p style="line-height:1.5; color:#687068;">
+        Choose a section to begin at its provisional starting coordinate.
+      </p>
+      <div id="sectionCardsFull" class="section-grid"></div>
+    </section>
+
+    <!-- FULL FIELD MAP -->
+    <section id="fullFieldMapScreen" class="screen">
+      <div class="top-links">
+        <button onclick="showHome()">Home</button>
+        <button onclick="showSections()">Sections</button>
+        <button onclick="showNotes()">My Notes</button>
+      </div>
+
+      <h2>Full Field Map</h2>
+      <p class="map-instructions">
+        This cumulative map shows all four observation sections together.
+        Rows are <b>Ranges</b> and columns are <b>Passes</b>. Scroll sideways as needed.
+        Tap any populated plot to open it.
+      </p>
+
+      <div class="section-legend">
+        <span><i class="section-release"></i>GEM Release Obs</span>
+        <span><i class="section-cl"></i>BC Obs — Chile</span>
+        <span><i class="section-hi"></i>BC Obs — Hawaii</span>
+        <span><i class="section-nc"></i>BC Obs — North Carolina</span>
+      </div>
+
+      <div class="full-field-map-wrap">
+        <div id="fullFieldMap" class="full-field-map"></div>
+      </div>
+
+      <div class="map-legend">
+        <span>★ Favorite</span>
+        <span>• Written note</span>
+      </div>
+    </section>
+
+    <!-- SECTION MAP -->
+    <section id="sectionMapScreen" class="screen">
+      <div class="top-links">
+        <button onclick="showHome()">Home</button>
+        <button onclick="showSections()">Sections</button>
+        <button onclick="showNotes()">My Notes</button>
+      </div>
+
+      <h2 id="sectionMapTitle">Section Map</h2>
+      <p id="sectionMapInstructions" class="map-instructions"></p>
+
+      <div class="section-map-wrap">
+        <div id="sectionMap" class="section-map"></div>
+      </div>
+
+      <div class="map-legend">
+        <span>Green = observation plot</span>
+        <span>★ Favorite</span>
+        <span>• Written note</span>
+      </div>
+
+      <button id="startSectionFromMap" class="button primary" style="margin-top:18px;">
+        Start at Prototype Starting Point
+      </button>
+    </section>
+
+    <!-- NOTES -->
+    <section id="notesScreen" class="screen">
+      <div class="top-links">
+        <button onclick="showHome()">Home</button>
+        <button onclick="showSections()">Sections</button>
+        <button onclick="returnToPlot()">Return to Plot</button>
+      </div>
+
+      <h2>My Field Notes</h2>
+
+      <div class="filter-row">
+        <button id="filterAll" class="active" onclick="setNotesFilter('all')">All Saved</button>
+        <button id="filterFavorites" onclick="setNotesFilter('favorites')">★ Favorites</button>
+        <button id="filterNotes" onclick="setNotesFilter('notes')">Notes Only</button>
+      </div>
+
+      <div class="export-box">
+        <p>
+          Your notes are stored only on this device.
+          Download or email a copy if you'd like to keep them after the tour.
+        </p>
+        <button class="button primary" onclick="downloadCSV()">Download My Notes (.csv)</button>
+        <button class="button outline" onclick="emailNotes()">Email My Notes</button>
+      </div>
+
+      <div id="notesList"></div>
+    </section>
+
+  </main>
+
+  <footer>
+    <strong>2026 Observation Guide Prototype</strong>
+    <div class="disclaimer">
+      This independently developed field guide is provided for informational purposes and is not an official USDA website or USDA digital product.
+      The U.S. Department of Agriculture and USDA Agricultural Research Service do not operate or maintain this website.
+      Official GEM information is available through the
+      <a href="https://www.ars.usda.gov/germplasm-enhancement-of-maize/" target="_blank" rel="noopener">USDA Agricultural Research Service</a>.
+    </div>
+  </footer>
+</div>
+
+<script>
+  const ORGANIZER_EMAIL = "kiarak@iastate.edu";
+  const DATA_FILE = "tsg-obs-data.csv";
+
+  const SECTION_CONFIG = {
+    "Release_Obs": { name: "GEM Release Obs", startRange: 5, startPass: 3 },
+    "BcObs_CL": { name: "BC Obs — Chile", startRange: 13, startPass: 3 },
+    "BcObs_HI": { name: "BC Obs — Hawaii", startRange: 45, startPass: 3 },
+    "BcObs_NC": { name: "BC Obs — North Carolina", startRange: 56, startPass: 3 }
+  };
+
+  let entries = [];
+  let currentEntry = null;
+  let currentSectionEntries = [];
+  let currentIndex = 0;
+  let currentSectionKey = null;
+  let notesFilter = "all";
+
+  window.addEventListener("DOMContentLoaded", loadData);
+
+  async function loadData() {
+    try {
+      let csvText = "";
+      let loadedFromCache = false;
+
+      try {
+        const response = await fetch(DATA_FILE);
+        if (!response.ok) throw new Error("Could not load " + DATA_FILE);
+        csvText = await response.text();
+        localStorage.setItem("gemObsData2026", csvText);
+      } catch (networkError) {
+        csvText = localStorage.getItem("gemObsData2026") || "";
+        if (!csvText) throw networkError;
+        loadedFromCache = true;
+      }
+
+      entries = parseCSV(csvText)
+        .map(cleanEntry)
+        .filter(e => e.Experiment && e.Range && e.Pass);
+
+      if (!entries.length) throw new Error("No observation plots found.");
+
+      entries.sort((a,b) =>
+        sectionOrder(a.Experiment) - sectionOrder(b.Experiment) ||
+        Number(a.Range) - Number(b.Range) ||
+        Number(a.Pass) - Number(b.Pass)
+      );
+
+      document.getElementById("dataStatus").textContent =
+        entries.length + " observation plots loaded. The prototype is ready." +
+        (loadedFromCache ? " Using the saved offline copy on this device." : "");
+
+      buildSectionCards();
+    } catch (error) {
+      document.getElementById("dataStatus").innerHTML =
+        "<div class='error-box'>The observation data could not be loaded. Make sure <b>" +
+        escapeHTML(DATA_FILE) +
+        "</b> is uploaded in the same GitHub folder as <b>index.html</b>.</div>";
+      console.error(error);
+    }
+  }
+
+  function sectionOrder(key) {
+    return ["Release_Obs","BcObs_CL","BcObs_HI","BcObs_NC"].indexOf(key);
+  }
+
+  function parseCSV(text) {
+    const rows = [];
+    let row = [];
+    let field = "";
+    let inQuotes = false;
+
+    for (let i = 0; i < text.length; i++) {
+      const char = text[i];
+      const next = text[i+1];
+
+      if (char === '"') {
+        if (inQuotes && next === '"') { field += '"'; i++; }
+        else inQuotes = !inQuotes;
+      } else if (char === "," && !inQuotes) {
+        row.push(field); field = "";
+      } else if ((char === "\n" || char === "\r") && !inQuotes) {
+        if (char === "\r" && next === "\n") i++;
+        row.push(field);
+        if (row.some(cell => cell !== "")) rows.push(row);
+        row = []; field = "";
+      } else {
+        field += char;
+      }
+    }
+
+    if (field !== "" || row.length) {
+      row.push(field);
+      rows.push(row);
+    }
+
+    if (rows.length < 2) return [];
+
+    const headers = rows[0].map(h => h.trim());
+
+    return rows.slice(1).map(values => {
+      const obj = {};
+      headers.forEach((h,i) => obj[h] = (values[i] ?? "").trim());
+      return obj;
+    });
+  }
+
+  function cleanEntry(raw) {
+    const result = {};
+    Object.keys(raw).forEach(key => {
+      let value = raw[key];
+      if (value === undefined || value === null) value = "";
+      value = String(value).trim();
+      if (value.toLowerCase() === "nan") value = "";
+      result[key.trim()] = value;
+    });
+    return result;
+  }
+
+  function buildSectionCards() {
+    const html = Object.entries(SECTION_CONFIG).map(([key,cfg]) => {
+      const group = entries.filter(e => e.Experiment === key);
+      const ranges = group.map(e => Number(e.Range)).filter(Number.isFinite);
+      const minRange = Math.min(...ranges);
+      const maxRange = Math.max(...ranges);
+
+      return `
+        <div class="section-card">
+          <h3>${escapeHTML(cfg.name)}</h3>
+          <div class="section-meta">
+            ${group.length} plots<br>
+            Ranges ${minRange}–${maxRange}<br>
+            <b>Prototype start:</b> Range ${cfg.startRange}, Pass ${cfg.startPass}
+          </div>
+          <div class="section-actions">
+            <button class="map-action" onclick="showSectionMap('${key}')">View Map</button>
+            <button onclick="startSection('${key}')">Start Section</button>
+          </div>
+        </div>`;
+    }).join("");
+
+    document.getElementById("sectionCards").innerHTML = html;
+    document.getElementById("sectionCardsFull").innerHTML = html;
+    buildFieldOverview();
+    buildFullMapPreview();
+    buildFullFieldMap();
+  }
+
+
+  function sectionClass(experiment) {
+    if (experiment === "Release_Obs") return "section-release";
+    if (experiment === "BcObs_CL") return "section-cl";
+    if (experiment === "BcObs_HI") return "section-hi";
+    if (experiment === "BcObs_NC") return "section-nc";
+    return "section-gap";
+  }
+
+  function buildFullMapPreview() {
+    const container = document.getElementById("fullMapPreview");
+    if (!container) return;
+
+    const rangesPresent = [...new Set(entries.map(e => Number(e.Range)))].sort((a,b) => b-a);
+    const minRange = Math.min(...rangesPresent);
+    const maxRange = Math.max(...rangesPresent);
+
+    let html = "";
+
+    for (let range = maxRange; range >= minRange; range--) {
+      const rangeEntries = entries.filter(e => Number(e.Range) === range);
+      let experiment = "";
+      if (rangeEntries.length) experiment = rangeEntries[0].Experiment;
+
+      const cfg = SECTION_CONFIG[experiment];
+      const label = cfg ? cfg.name : "No tour plots";
+
+      html += `
+        <div class="full-map-preview-row">
+          <div class="full-map-preview-range">R ${range}</div>
+          <div class="full-map-preview-band ${sectionClass(experiment)}">
+            ${escapeHTML(label)}
+          </div>
+        </div>`;
+    }
+
+    container.innerHTML = html;
+  }
+
+  function showFullFieldMap() {
+    hideAllScreens();
+    document.getElementById("fullFieldMapScreen").classList.add("active");
+    updateFullFieldMapHighlights();
+    window.scrollTo(0,0);
+  }
+
+  function buildFullFieldMap() {
+    const container = document.getElementById("fullFieldMap");
+    if (!container || !entries.length) return;
+
+    const passValues = [...new Set(entries.map(e => Number(e.Pass)))].sort((a,b)=>a-b);
+    const minPass = Math.min(...passValues);
+    const maxPass = Math.max(...passValues);
+
+    const rangeValues = [...new Set(entries.map(e => Number(e.Range)))];
+    const minRange = Math.min(...rangeValues);
+    const maxRange = Math.max(...rangeValues);
+
+    // Current data use Passes 3–18; if future data expand, keep the map bounded to the observed extent.
+    const header = document.createElement("div");
+    header.className = "full-field-header";
+
+    const corner = document.createElement("div");
+    corner.textContent = "R / P";
+    header.appendChild(corner);
+
+    for (let pass = minPass; pass <= maxPass; pass++) {
+      const h = document.createElement("div");
+      h.textContent = pass;
+      header.appendChild(h);
+    }
+
+    container.innerHTML = "";
+    container.appendChild(header);
+
+    for (let range = maxRange; range >= minRange; range--) {
+      const row = document.createElement("div");
+      row.className = "full-field-row";
+
+      const label = document.createElement("div");
+      label.className = "full-field-range";
+      label.textContent = "R " + range;
+      row.appendChild(label);
+
+      for (let pass = minPass; pass <= maxPass; pass++) {
+        const entry = entries.find(
+          e => Number(e.Range) === range && Number(e.Pass) === pass
+        );
+
+        const cell = document.createElement("div");
+        cell.className = "full-field-cell";
+
+        if (entry) {
+          cell.classList.add(sectionClass(entry.Experiment));
+          cell.dataset.key = entryKey(entry);
+          cell.title =
+            (entry.Pedigree || "Observation plot") +
+            " — Range " + range + ", Pass " + pass;
+          cell.textContent = pass;
+          cell.onclick = () => jumpToPlot(entry);
+        } else {
+          cell.classList.add("empty");
+        }
+
+        row.appendChild(cell);
+      }
+
+      container.appendChild(row);
+    }
+
+    updateFullFieldMapHighlights();
+  }
+
+  function updateFullFieldMapHighlights() {
+    const saved = getSavedData();
+
+    document.querySelectorAll(".full-field-cell[data-key]").forEach(cell => {
+      cell.classList.remove("current","favorite","noted");
+      const record = saved[cell.dataset.key];
+
+      if (record?.favorite) cell.classList.add("favorite");
+      if ((record?.note || "").trim() !== "") cell.classList.add("noted");
+
+      if (currentEntry && cell.dataset.key === entryKey(currentEntry)) {
+        cell.classList.add("current");
+      }
+    });
+  }
+
+  function buildFieldOverview() {
+    const container = document.getElementById("fieldOverview");
+    if (!container) return;
+
+    const keys = ["Release_Obs","BcObs_CL","BcObs_HI","BcObs_NC"];
+    container.innerHTML = keys.map(key => {
+      const cfg = SECTION_CONFIG[key];
+      const group = entries.filter(e => e.Experiment === key);
+      const ranges = [...new Set(group.map(e => Number(e.Range)))].sort((a,b)=>a-b);
+      const rangeText = ranges.length
+        ? (ranges.length === 1 ? "Range " + ranges[0] : "Ranges " + ranges[0] + "–" + ranges[ranges.length-1])
+        : "";
+
+      return `
+        <button class="overview-section" onclick="showSectionMap('${key}')">
+          <strong>${escapeHTML(cfg.name)}</strong>
+          <span>${group.length} plots • ${escapeHTML(rangeText)}</span>
+        </button>`;
+    }).join("");
+  }
+
+  function hideAllScreens() {
+    document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  }
+
+  function showHome() {
+    hideAllScreens();
+    document.getElementById("homeScreen").classList.add("active");
+    window.scrollTo(0,0);
+  }
+
+  function showSections() {
+    hideAllScreens();
+    document.getElementById("sectionsScreen").classList.add("active");
+    window.scrollTo(0,0);
+  }
+
+  function showNotes() {
+    hideAllScreens();
+    document.getElementById("notesScreen").classList.add("active");
+    buildNotesList();
+    window.scrollTo(0,0);
+  }
+
+  function returnToPlot() {
+    if (!currentEntry) { showHome(); return; }
+    showPlotScreen();
+  }
+
+
+  function showCurrentSectionMap() {
+    if (!currentEntry) {
+      showSections();
+      return;
+    }
+    showSectionMap(currentEntry.Experiment);
+  }
+
+  function showSectionMap(sectionKey) {
+    const cfg = SECTION_CONFIG[sectionKey];
+    if (!cfg) return;
+
+    hideAllScreens();
+    document.getElementById("sectionMapScreen").classList.add("active");
+    document.getElementById("sectionMapTitle").textContent = cfg.name + " Map";
+    document.getElementById("sectionMapInstructions").innerHTML =
+      "Rows are <b>Ranges</b> and columns are <b>Passes</b>. Each green cell is a single-row observation plot. Tap any plot to open it.";
+
+    const startButton = document.getElementById("startSectionFromMap");
+    startButton.onclick = () => startSection(sectionKey);
+    startButton.textContent =
+      "Start at Range " + cfg.startRange + ", Pass " + cfg.startPass;
+
+    buildSectionMap(sectionKey);
+    window.scrollTo(0,0);
+  }
+
+  function buildSectionMap(sectionKey) {
+    const container = document.getElementById("sectionMap");
+    const group = entries.filter(e => e.Experiment === sectionKey);
+    const ranges = [...new Set(group.map(e => Number(e.Range)))].sort((a,b)=>b-a);
+
+    const header = document.createElement("div");
+    header.className = "section-map-header";
+
+    const corner = document.createElement("div");
+    corner.textContent = "Range / Pass";
+    header.appendChild(corner);
+
+    for (let pass = 3; pass <= 18; pass++) {
+      const cell = document.createElement("div");
+      cell.textContent = pass;
+      header.appendChild(cell);
+    }
+
+    container.innerHTML = "";
+    container.appendChild(header);
+
+    ranges.forEach(range => {
+      const row = document.createElement("div");
+      row.className = "section-map-row";
+
+      const label = document.createElement("div");
+      label.className = "section-map-label";
+      label.textContent = "R " + range;
+      row.appendChild(label);
+
+      for (let pass = 3; pass <= 18; pass++) {
+        const entry = group.find(
+          e => Number(e.Range) === range && Number(e.Pass) === pass
+        );
+
+        const cell = document.createElement("div");
+        cell.className = "section-map-cell";
+
+        if (entry) {
+          cell.dataset.key = entryKey(entry);
+          cell.title =
+            (entry.Pedigree || "Observation plot") +
+            " — Range " + range + ", Pass " + pass;
+          cell.textContent = pass;
+          cell.onclick = () => jumpToPlot(entry);
+        } else {
+          cell.classList.add("empty");
+          cell.textContent = "";
+        }
+
+        row.appendChild(cell);
+      }
+
+      container.appendChild(row);
+    });
+
+    updateSectionMapHighlights();
+    updateFullFieldMapHighlights();
+  }
+
+  function updateSectionMapHighlights() {
+    const saved = getSavedData();
+
+    document.querySelectorAll(".section-map-cell[data-key]").forEach(cell => {
+      cell.classList.remove("current","favorite","noted");
+      const record = saved[cell.dataset.key];
+
+      if (record?.favorite) cell.classList.add("favorite");
+      if ((record?.note || "").trim() !== "") cell.classList.add("noted");
+
+      if (currentEntry && cell.dataset.key === entryKey(currentEntry)) {
+        cell.classList.add("current");
+      }
+    });
+  }
+
+  function startSection(sectionKey) {
+    const cfg = SECTION_CONFIG[sectionKey];
+    currentSectionKey = sectionKey;
+    currentSectionEntries = entries
+      .filter(e => e.Experiment === sectionKey)
+      .sort((a,b) => Number(a.Range)-Number(b.Range) || Number(a.Pass)-Number(b.Pass));
+
+    let idx = currentSectionEntries.findIndex(
+      e => Number(e.Range) === cfg.startRange && Number(e.Pass) === cfg.startPass
+    );
+    if (idx < 0) idx = 0;
+
+    currentIndex = idx;
+    currentEntry = currentSectionEntries[currentIndex];
+    showPlotScreen();
+  }
+
+  function jumpToPlot(entry) {
+    currentSectionKey = entry.Experiment;
+    currentSectionEntries = entries
+      .filter(e => e.Experiment === entry.Experiment)
+      .sort((a,b) => Number(a.Range)-Number(b.Range) || Number(a.Pass)-Number(b.Pass));
+
+    currentIndex = currentSectionEntries.findIndex(
+      e => String(e.Range) === String(entry.Range) && String(e.Pass) === String(entry.Pass)
+    );
+
+    currentEntry = currentSectionEntries[currentIndex];
+    showPlotScreen();
+  }
+
+  function showPlotScreen() {
+    hideAllScreens();
+    document.getElementById("plotScreen").classList.add("active");
+    displayPlot();
+    window.scrollTo(0,0);
+  }
+
+  function displayPlot() {
+    const e = currentEntry;
+    if (!e) return;
+
+    const saved = getSavedData();
+    const key = entryKey(e);
+    const record = saved[key] || {};
+    const cfg = SECTION_CONFIG[e.Experiment];
+
+    document.getElementById("plotBadge").textContent =
+      "Plot " + (currentIndex + 1) + " of " + currentSectionEntries.length;
+
+    document.getElementById("sectionChip").textContent =
+      cfg?.name || e.Experiment;
+
+    document.getElementById("lineName").textContent =
+      e.Pedigree || "Unnamed plot";
+
+    document.getElementById("coords").textContent =
+      "Range " + e.Range + " • Pass " + e.Pass;
+
+    document.getElementById("infoCard").innerHTML = buildInfoHTML(e);
+    document.getElementById("noteBox").value = record.note || "";
+    updateFavoriteButton(Boolean(record.favorite));
+    document.getElementById("savedMessage").textContent = "";
+  }
+
+  function buildInfoHTML(e) {
+    const sections = [];
+
+    if (hasValue(e.Pedigree)) {
+      sections.push(
+        "<div class='info-row'><div class='label'>Line / Pedigree</div>" +
+        "<div class='value'>" + escapeHTML(e.Pedigree) + "</div></div>"
+      );
+    }
+
+    const metrics = [
+      ["Shed GDD", e["Shed GDD"]],
+      ["Shed DAP", e["Shed DAP"]],
+      ["Silk GDD", e["Silk GDD"]],
+      ["Silk DAP", e["Silk DAP"]],
+      ["Plant Height", e.PH],
+      ["Ear Height", e.EH]
+    ].filter(([label,value]) => hasValue(value));
+
+    if (metrics.length) {
+      let html = "<div class='info-row'><div class='label'>Agronomic Information</div><div class='agronomic-grid'>";
+      metrics.forEach(([label,value]) => {
+        html += "<div class='metric'><div class='metric-label'>" +
+          escapeHTML(label) + "</div><div class='metric-value'>" +
+          escapeHTML(formatNumber(value)) + "</div></div>";
+      });
+      html += "</div></div>";
+      sections.push(html);
+    }
+
+    if (!sections.length) {
+      return "<div class='value' style='color:#687068;'>Additional information will be added before the tour.</div>";
+    }
+
+    return sections.join("");
+  }
+
+  function previousPlot() {
+    if (!currentSectionEntries.length) return;
+    currentIndex = Math.max(0, currentIndex - 1);
+    currentEntry = currentSectionEntries[currentIndex];
+    displayPlot();
+    window.scrollTo(0,0);
+  }
+
+  function nextPlot() {
+    if (!currentSectionEntries.length) return;
+
+    if (currentIndex >= currentSectionEntries.length - 1) {
+      showSectionFinish();
+      return;
+    }
+
+    currentIndex++;
+    currentEntry = currentSectionEntries[currentIndex];
+    displayPlot();
+    window.scrollTo(0,0);
+  }
+
+  function showSectionFinish() {
+    if (!currentEntry) return;
+
+    const sectionKey = currentEntry.Experiment;
+    const cfg = SECTION_CONFIG[sectionKey];
+    const sectionKeys = ["Release_Obs","BcObs_CL","BcObs_HI","BcObs_NC"];
+    const sectionIndex = sectionKeys.indexOf(sectionKey);
+    const nextKey = sectionIndex >= 0 && sectionIndex < sectionKeys.length - 1
+      ? sectionKeys[sectionIndex + 1]
+      : null;
+
+    hideAllScreens();
+    document.getElementById("sectionFinishScreen").classList.add("active");
+
+    document.getElementById("sectionFinishTitle").textContent =
+      "You've reached the final plot of " + (cfg?.name || sectionKey) + ".";
+
+    document.getElementById("sectionFinishText").innerHTML =
+      "You can review this section on the map, return to the final plot, or continue to another observation section.";
+
+    document.getElementById("sectionFinishMapButton").onclick =
+      () => showSectionMap(sectionKey);
+
+    const nextButton = document.getElementById("nextSectionButton");
+
+    if (nextKey) {
+      const nextCfg = SECTION_CONFIG[nextKey];
+      nextButton.style.display = "block";
+      nextButton.textContent =
+        "Continue to " + nextCfg.name;
+      nextButton.onclick = () => startSection(nextKey);
+    } else {
+      nextButton.style.display = "none";
+    }
+
+    window.scrollTo(0,0);
+  }
+
+  function returnToLastPlotInSection() {
+    if (!currentSectionEntries.length) {
+      showSections();
+      return;
+    }
+
+    currentIndex = currentSectionEntries.length - 1;
+    currentEntry = currentSectionEntries[currentIndex];
+    showPlotScreen();
+  }
+
+  function entryKey(e) {
+    return e.Experiment + "|" + e.Range + "|" + e.Pass;
+  }
+
+  function getSavedData() {
+    try {
+      return JSON.parse(localStorage.getItem("gemObsNotes2026") || "{}");
+    } catch { return {}; }
+  }
+
+  function saveData(data) {
+    localStorage.setItem("gemObsNotes2026", JSON.stringify(data));
+  }
+
+  function saveCurrentNote() {
+    if (!currentEntry) return;
+    const saved = getSavedData();
+    const key = entryKey(currentEntry);
+    if (!saved[key]) saved[key] = {};
+    saved[key].note = document.getElementById("noteBox").value;
+    saveData(saved);
+    document.getElementById("savedMessage").textContent = "Saved automatically";
+    updateSectionMapHighlights();
+  }
+
+  function toggleFavorite() {
+    if (!currentEntry) return;
+    const saved = getSavedData();
+    const key = entryKey(currentEntry);
+    if (!saved[key]) saved[key] = {};
+    saved[key].favorite = !saved[key].favorite;
+    saveData(saved);
+    updateFavoriteButton(Boolean(saved[key].favorite));
+    updateSectionMapHighlights();
+    updateFullFieldMapHighlights();
+  }
+
+  function updateFavoriteButton(isFavorite) {
+    const button = document.getElementById("favoriteButton");
+    if (isFavorite) {
+      button.textContent = "★ Saved as Favorite";
+      button.classList.add("selected");
+    } else {
+      button.textContent = "☆ Save as Favorite";
+      button.classList.remove("selected");
+    }
+  }
+
+  function setNotesFilter(filter) {
+    notesFilter = filter;
+    document.getElementById("filterAll").classList.toggle("active", filter === "all");
+    document.getElementById("filterFavorites").classList.toggle("active", filter === "favorites");
+    document.getElementById("filterNotes").classList.toggle("active", filter === "notes");
+    buildNotesList();
+  }
+
+  function getSavedEntries() {
+    const saved = getSavedData();
+    return entries.filter(e => {
+      const record = saved[entryKey(e)];
+      return record && (record.favorite || (record.note || "").trim() !== "");
+    });
+  }
+
+  function buildNotesList() {
+    const saved = getSavedData();
+    const container = document.getElementById("notesList");
+    let list = getSavedEntries();
+
+    if (notesFilter === "favorites")
+      list = list.filter(e => saved[entryKey(e)]?.favorite);
+
+    if (notesFilter === "notes")
+      list = list.filter(e => (saved[entryKey(e)]?.note || "").trim() !== "");
+
+    if (!list.length) {
+      container.innerHTML =
+        "<div class='empty-notes'>You haven't saved any notes or favorites yet.</div>";
+      return;
+    }
+
+    container.innerHTML = list.map(e => {
+      const record = saved[entryKey(e)] || {};
+      return `
+        <div class="notes-entry">
+          <h3>${record.favorite ? "★ " : ""}${escapeHTML(e.Pedigree || "Unnamed plot")}</h3>
+          <div class="small">${escapeHTML(SECTION_CONFIG[e.Experiment]?.name || e.Experiment)} • Range ${escapeHTML(e.Range)} • Pass ${escapeHTML(e.Pass)}</div>
+          <div class="note-text">${escapeHTML((record.note || "").trim() || "No written notes.")}</div>
+          <button onclick="jumpToSaved('${escapeJS(e.Experiment)}','${escapeJS(e.Range)}','${escapeJS(e.Pass)}')" style="margin-top:10px; padding:8px 10px; border:1px solid #c8d0c7; border-radius:8px; background:white; color:#205b36; font-weight:700;">Open Plot</button>
+        </div>`;
+    }).join("");
+  }
+
+  function jumpToSaved(experiment, range, pass) {
+    const e = entries.find(x =>
+      x.Experiment === experiment &&
+      String(x.Range) === String(range) &&
+      String(x.Pass) === String(pass)
+    );
+    if (e) jumpToPlot(e);
+  }
+
+  function csvSafe(v) {
+    return '"' + String(v ?? "").replace(/"/g,'""') + '"';
+  }
+
+  function downloadCSV() {
+    const saved = getSavedData();
+    const list = getSavedEntries();
+
+    if (!list.length) {
+      alert("You do not have any saved notes or favorites yet.");
+      return;
+    }
+
+    const rows = [[
+      "Section","Range","Pass","Line/Pedigree","Favorite","Notes"
+    ]];
+
+    list.forEach(e => {
+      const record = saved[entryKey(e)] || {};
+      rows.push([
+        SECTION_CONFIG[e.Experiment]?.name || e.Experiment,
+        e.Range, e.Pass, e.Pedigree,
+        record.favorite ? "Yes" : "No",
+        record.note || ""
+      ]);
+    });
+
+    const csv = rows.map(r => r.map(csvSafe).join(",")).join("\n");
+    const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "GEM_Observation_Tour_2026_Notes.csv";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  function emailNotes() {
+    const saved = getSavedData();
+    const list = getSavedEntries();
+
+    if (!list.length) {
+      alert("You do not have any saved notes or favorites yet.");
+      return;
+    }
+
+    let body = "My GEM Observation Tour 2026 Notes\n\n";
+
+    list.forEach(e => {
+      const record = saved[entryKey(e)] || {};
+      body +=
+        "----------------------------------------\n" +
+        "Section: " + (SECTION_CONFIG[e.Experiment]?.name || e.Experiment) + "\n" +
+        "Range: " + e.Range + "\n" +
+        "Pass: " + e.Pass + "\n" +
+        "Line/Pedigree: " + (e.Pedigree || "") + "\n" +
+        "Favorite: " + (record.favorite ? "Yes" : "No") + "\n" +
+        "Notes: " + (record.note || "None") + "\n\n";
+    });
+
+    window.location.href =
+      "mailto:?subject=" + encodeURIComponent("My GEM Observation Tour 2026 Notes") +
+      "&body=" + encodeURIComponent(body);
+  }
+
+  function searchPlots(inputId, resultsId, jumpFirst=false) {
+    const input = document.getElementById(inputId);
+    const results = document.getElementById(resultsId);
+    const raw = (input?.value || "").trim();
+    const q = raw.toLowerCase();
+
+    if (!q) {
+      results.innerHTML = "";
+      return;
+    }
+
+    // Coordinate search: e.g. "13 3", "R13 P3", or "13,3"
+    const nums = raw.match(/\d+/g);
+    if (nums && nums.length >= 2) {
+      const range = nums[0];
+      const pass = nums[1];
+      const coordMatch = entries.find(e =>
+        String(e.Range) === String(Number(range)) &&
+        String(e.Pass) === String(Number(pass))
+      );
+
+      if (coordMatch) {
+        if (jumpFirst) { jumpToPlot(coordMatch); return; }
+        results.innerHTML = resultButton(coordMatch);
+        return;
+      }
+    }
+
+    const exact = entries.find(e =>
+      String(e.Pedigree || "").trim().toLowerCase() === q
+    );
+
+    if (exact) {
+      if (jumpFirst) { jumpToPlot(exact); return; }
+      results.innerHTML = resultButton(exact);
+      return;
+    }
+
+    const matches = entries
+      .filter(e => String(e.Pedigree || "").toLowerCase().includes(q))
+      .slice(0,8);
+
+    if (jumpFirst && matches.length === 1) {
+      jumpToPlot(matches[0]);
+      return;
+    }
+
+    if (!matches.length) {
+      results.innerHTML =
+        "<div style='font-size:13px;color:#687068;padding:8px 2px;'>No matching plot found.</div>";
+      return;
+    }
+
+    results.innerHTML = matches.map(resultButton).join("");
+  }
+
+  function resultButton(e) {
+    return `<button class="search-result" onclick="jumpToSaved('${escapeJS(e.Experiment)}','${escapeJS(e.Range)}','${escapeJS(e.Pass)}')">
+      ${escapeHTML(e.Pedigree || "Unnamed plot")}<br>
+      <span style="font-weight:400;color:#687068;font-size:12px;">
+        ${escapeHTML(SECTION_CONFIG[e.Experiment]?.name || e.Experiment)} • Range ${escapeHTML(e.Range)} • Pass ${escapeHTML(e.Pass)}
+      </span>
+    </button>`;
+  }
+
+  function generalQuestion() {
+    const subject = "GEM Observation Tour 2026 — General Question";
+    const body = "Hello,\n\nI have a general question about the GEM Observation Tour 2026:\n\n";
+    window.location.href =
+      "mailto:" + ORGANIZER_EMAIL +
+      "?subject=" + encodeURIComponent(subject) +
+      "&body=" + encodeURIComponent(body);
+  }
+
+  function askQuestion() {
+    if (!currentEntry) return;
+    const e = currentEntry;
+    const subject = "Observation Plot Question — " + (e.Pedigree || ("Range " + e.Range + " Pass " + e.Pass));
+    const body =
+      "I have a question about the following observation plot:\n\n" +
+      "Section: " + (SECTION_CONFIG[e.Experiment]?.name || e.Experiment) + "\n" +
+      "Range: " + e.Range + "\n" +
+      "Pass: " + e.Pass + "\n" +
+      "Line/Pedigree: " + (e.Pedigree || "") + "\n\n" +
+      "My question:\n";
+
+    window.location.href =
+      "mailto:" + ORGANIZER_EMAIL +
+      "?subject=" + encodeURIComponent(subject) +
+      "&body=" + encodeURIComponent(body);
+  }
+
+  function hasValue(v) {
+    if (v === undefined || v === null) return false;
+    const t = String(v).trim();
+    return t !== "" && t.toLowerCase() !== "nan";
+  }
+
+  function formatNumber(v) {
+    const t = String(v ?? "").trim();
+    if (/^-?\d+\.0$/.test(t)) return t.slice(0,-2);
+    return t;
+  }
+
+  function escapeHTML(text) {
+    const div = document.createElement("div");
+    div.textContent = String(text ?? "");
+    return div.innerHTML;
+  }
+
+  function escapeJS(text) {
+    return String(text ?? "").replace(/\\/g,"\\\\").replace(/'/g,"\\'");
+  }
+</script>
+</body>
+</html>
